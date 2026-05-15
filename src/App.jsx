@@ -132,19 +132,27 @@ function Field({ label, value, onChange, type = "text", options }) {
 
 function Modal({ title, children, onClose }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm">
+    <div className="modal-backdrop" role="presentation" onMouseDown={onClose}>
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 20 }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        initial={{ opacity: 0, scale: 0.96, y: 18 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="max-h-[90vh] w-full max-w-3xl overflow-auto rounded-[2rem] border border-white/70 bg-white p-6 shadow-2xl"
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        className="modal-panel"
+        onMouseDown={(event) => event.stopPropagation()}
       >
-        <div className="mb-5 flex items-center justify-between gap-4">
-          <h3 className="text-xl font-black text-slate-950">{title}</h3>
-          <button onClick={onClose} className="rounded-full bg-slate-100 px-3 py-1.5 text-sm font-bold text-slate-600 hover:bg-slate-200">
+        <div className="modal-header">
+          <div>
+            <p className="text-xs font-black uppercase tracking-wide text-blue-600">빠른 작업</p>
+            <h3 id="modal-title" className="mt-1 text-xl font-black text-slate-950">{title}</h3>
+          </div>
+          <button onClick={onClose} className="modal-close" aria-label="팝업 닫기">
             닫기
           </button>
         </div>
-        {children}
+        <div className="modal-body">{children}</div>
       </motion.div>
     </div>
   );
@@ -363,7 +371,7 @@ export default function EducationExpenseManagementDemo() {
               <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{activeTitle}</h1>
               <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">페이지 전체 폭과 높이를 활용하도록 사이드바·상단 요약·콘텐츠 그리드를 재구성했습니다.</p>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="action-row justify-start sm:justify-end">
               <Button variant="light" onClick={() => setActiveTab("templates")}>🧩 템플릿 관리</Button>
               <Button onClick={simulateUpload}>📤 파일 업로드/OCR</Button>
             </div>
@@ -522,7 +530,7 @@ export default function EducationExpenseManagementDemo() {
                       <h3 className="text-lg font-black">인보이스 관리</h3>
                       <p className="text-sm text-slate-500">등록, OCR 시뮬레이션, 검토, 승인/반려, CSV 다운로드가 동작합니다.</p>
                     </div>
-                    <div className="flex flex-col gap-2 sm:flex-row">
+                    <div className="toolbar-actions">
                       <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="직원, 학교, 인보이스 검색" className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 sm:w-72" />
                       <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="rounded-2xl border border-slate-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-blue-400">
                         {["전체", "승인완료", "검토중", "승인대기", "보류", "반려"].map((item) => <option key={item}>{item}</option>)}
@@ -669,7 +677,7 @@ export default function EducationExpenseManagementDemo() {
             <div className="rounded-2xl bg-slate-50 p-4"><p className="text-xs font-bold text-slate-500">직원/자녀</p><p className="mt-1 font-bold">{selectedInvoice.employee} / {selectedInvoice.child}</p></div>
             <div className="rounded-2xl bg-slate-50 p-4"><p className="text-xs font-bold text-slate-500">금액</p><p className="mt-1 font-bold">{Number(selectedInvoice.amount).toLocaleString()} {selectedInvoice.currency}</p></div>
             <div className="md:col-span-2 rounded-2xl border border-red-100 bg-red-50 p-4"><p className="text-xs font-bold text-red-500">검증 이슈</p><p className="mt-1 font-semibold text-red-700">{selectedInvoice.issue}</p></div>
-            <div className="md:col-span-2 flex flex-wrap gap-2"><Button onClick={() => updateInvoiceStatus(selectedInvoice.no, "승인완료")}>✅ 승인</Button><Button variant="light" onClick={() => updateInvoiceStatus(selectedInvoice.no, "보류")}>⏳ 보류</Button><Button variant="danger" onClick={() => updateInvoiceStatus(selectedInvoice.no, "반려")}>❌ 반려</Button></div>
+            <div className="md:col-span-2 action-row pt-2"><Button onClick={() => updateInvoiceStatus(selectedInvoice.no, "승인완료")}>✅ 승인</Button><Button variant="light" onClick={() => updateInvoiceStatus(selectedInvoice.no, "보류")}>⏳ 보류</Button><Button variant="danger" onClick={() => updateInvoiceStatus(selectedInvoice.no, "반려")}>❌ 반려</Button></div>
           </div>
         </Modal>
       )}
