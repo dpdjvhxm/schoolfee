@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/build-tailwind.mjs",
     "dev": "vite --host 0.0.0.0",
+    "prebuild": "node scripts/build-tailwind.mjs",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
@@ -18,7 +20,7 @@
     "recharts": "latest"
   },
   "devDependencies": {
-    "tailwindcss": "latest",
+    "tailwindcss": "^4.3.0",
     "postcss": "latest",
     "autoprefixer": "latest"
   }
