@@ -405,7 +405,9 @@ export default function EducationExpenseManagementDemo() {
                     </div>
                   </Card>
 
-                  <div className="chart-grid">
+
+                  <div className="grid gap-6 xl:grid-cols-2">
+
                     <Card className="p-5 lg:p-6">
                       <h2 className="text-lg font-black">국가별 사용액</h2>
                       <div className="mt-5 h-[280px]">
