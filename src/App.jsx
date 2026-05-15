@@ -316,12 +316,12 @@ export default function EducationExpenseManagementDemo() {
   const pendingItems = invoices.filter((invoice) => invoice.issue !== "없음" || invoice.status !== "승인완료").slice(0, 5);
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,#dbeafe_0,#f8fafc_32%,#eef2ff_68%,#f8fafc_100%)] text-slate-900">
-      <div className="pointer-events-none fixed -left-24 top-20 h-72 w-72 rounded-full bg-blue-300/30 blur-3xl" />
-      <div className="pointer-events-none fixed bottom-4 right-4 h-96 w-96 rounded-full bg-cyan-200/40 blur-3xl" />
+    <div className="app-page text-slate-900">
+      <div className="app-orb app-orb-left" />
+      <div className="app-orb app-orb-right" />
 
-      <div className="relative flex min-h-screen flex-col xl:flex-row">
-        <aside className="sticky top-0 z-30 border-b border-white/70 bg-white/80 px-4 py-4 shadow-sm backdrop-blur-xl xl:h-screen xl:w-72 xl:border-b-0 xl:border-r xl:px-5 xl:py-6">
+      <div className="app-layout">
+        <aside className="app-sidebar">
           <div className="flex items-center justify-between gap-4 xl:block">
             <div className="flex items-center gap-3">
               <div className="grid h-12 w-12 place-items-center rounded-2xl bg-slate-950 text-2xl text-white shadow-lg">🎓</div>
@@ -333,7 +333,7 @@ export default function EducationExpenseManagementDemo() {
             <div className="hidden rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 sm:block xl:mt-5 xl:inline-flex">Live Demo</div>
           </div>
 
-          <nav className="mt-5 flex gap-2 overflow-x-auto pb-1 xl:block xl:space-y-2 xl:overflow-visible xl:pb-0">
+          <nav className="app-nav">
             {navItems.map(([key, label, icon]) => (
               <button
                 key={key}
@@ -356,8 +356,8 @@ export default function EducationExpenseManagementDemo() {
           </div>
         </aside>
 
-        <main className="relative flex min-h-screen flex-1 flex-col p-4 sm:p-6 lg:p-8">
-          <header className="mb-6 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+        <main className="app-main">
+          <header className="app-header">
             <div>
               <p className="text-sm font-bold text-blue-600">Education Expense Management</p>
               <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{activeTitle}</h1>
@@ -373,11 +373,11 @@ export default function EducationExpenseManagementDemo() {
             {notice}
           </div>
 
-          <section className="flex-1">
+          <section className="app-content">
             {activeTab === "dashboard" && (
-              <div className="grid min-h-full gap-6 2xl:grid-cols-[1fr_420px]">
-                <div className="space-y-6">
-                  <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <div className="dashboard-layout">
+                <div className="dashboard-main">
+                  <div className="metrics-grid">
                     <StatCard icon="💳" title="총 사용 비용" value={money(totalUsed)} desc={`전체 한도 ${money(totalLimit)} 중 ${budgetRate}% 사용`} accent="bg-blue-50 text-blue-700" />
                     <StatCard icon="⏳" title="처리 대기" value={`${pendingCount}건`} desc="검토중/승인대기/보류 인보이스" accent="bg-amber-50 text-amber-700" />
                     <StatCard icon="⚠️" title="검증 이슈" value={`${issueCount}건`} desc="정책, 증빙, OCR 이슈 포함" accent="bg-red-50 text-red-700" />
@@ -405,7 +405,9 @@ export default function EducationExpenseManagementDemo() {
                     </div>
                   </Card>
 
+
                   <div className="grid gap-6 xl:grid-cols-2">
+
                     <Card className="p-5 lg:p-6">
                       <h2 className="text-lg font-black">국가별 사용액</h2>
                       <div className="mt-5 h-[280px]">
@@ -436,7 +438,7 @@ export default function EducationExpenseManagementDemo() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="side-panel">
                   <Card className="p-5 lg:p-6">
                     <h2 className="text-lg font-black">오늘의 검수 큐</h2>
                     <p className="text-sm text-slate-500">클릭하면 상세 검수/승인 모달을 엽니다.</p>
